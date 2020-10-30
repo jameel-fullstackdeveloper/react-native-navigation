@@ -9,15 +9,12 @@ const styles = StyleSheet.create({
   },
 });
  
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({onSignIn}) => {
   return (
     <View style={styles.container}>
       <Text>Public Sign In Screen</Text>
-      <Button 
-        title ="Home"
-        onPress = { ()=> navigation.navigate('Home')}
-      />
-     
+      <Button title="Sign In" onPress={onSignIn} />
+      
     </View>
   );
 };

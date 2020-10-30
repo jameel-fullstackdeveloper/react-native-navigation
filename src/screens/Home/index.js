@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
  
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Protected Home Screen</Text>
