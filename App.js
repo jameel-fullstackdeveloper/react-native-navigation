@@ -1,14 +1,33 @@
 import React,  { useState }from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import LandingScreen from './src/screens/Landing';
 import HomeScreen from './src/screens/Home';
 import SignInScreen from './src/screens/SignIn';
 
-import { Text, Button } from 'react-native';
- 
+import { Button } from 'react-native';
+
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
+const HomeDrawer = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen
+        name="Landing"
+        component={LandingScreen}
+      />
+    </Drawer.Navigator>
+  );
+};
+
+
 const RootStack = createStackNavigator();
+
 
 const App = () => {
   
@@ -26,23 +45,29 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      
     <RootStack.Navigator>
         
         {isAuthenticated ? (
           <RootStack.Screen 
             name="Home" 
-            component={HomeScreen} 
-            options={{
+            component={HomeDrawer} 
+            options={({ route }) => ({
+              headerTitle: getFocusedRouteNameFromRoute(route),
               headerRight: () => (
                 <Button onPress={handleSignOut} title="Sign Out" />
               ),
-             }}
+             })}
             />
         ) : (
           <>
           <RootStack.Screen
               name="Landing" 
-              component={LandingScreen} />
+              component={LandingScreen} 
+              options={{
+                animationTypeForReplace: 'pop',
+              }}
+              />
 
           <RootStack.Screen 
             name="SignIn">
